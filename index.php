@@ -2,7 +2,6 @@
 
 use GuzzleHttp\Exception\GuzzleException;
 use Kirby\Email\Email;
-use Unsend\Client;
 use Unsend\Exceptions\InvalidArgumentException;
 use Unsend\Exceptions\MissingArgumentException;
 use Unsend\Unsend;
@@ -18,11 +17,11 @@ class UnsendEmailProvider extends Email
      */
     public function send(): bool
     {
-        $client = Client::create(
+        $unsend = Unsend::create(
             option('mattstein.unsend.apiKey'),
             option('mattstein.unsend.url')
         );
-        $unsend = new Unsend($client);
+
         $response = $unsend->sendEmail([
             'to' => current(array_keys($this->to())),
             'from' => $this->from(),
